@@ -1,0 +1,33 @@
+import pyperclip
+
+def main():
+    try:
+        # Copy text to clipboard
+        text_to_copy = "Hello from Pyperclip!"
+        pyperclip.copy(text_to_copy)
+        print(f"Copied to clipboard: {text_to_copy}")
+
+        # Paste text from clipboard
+        pasted_text = pyperclip.paste()
+        print(f"Pasted from clipboard: {pasted_text}")
+
+        # Check if clipboard is empty
+        if pasted_text.strip():
+            print("Clipboard contains text.")
+        else:
+            print("Clipboard is empty.")
+
+        # Wait for new clipboard content (with timeout)
+        try:
+            print("Waiting for new clipboard content (5s timeout)...")
+            new_text = pyperclip.waitForNewPaste(timeout=5)
+            print(f"New clipboard content: {new_text}")
+        except pyperclip.PyperclipTimeoutException:
+            print("No new clipboard content within 5 seconds.")
+
+    except pyperclip.PyperclipException as e:
+        print(f"Clipboard error: {e}")
+        print("On Linux, install xclip/xsel/wl-clipboard or PyQt5/gtk.")
+
+if __name__ == "__main__":
+    main()
